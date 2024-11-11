@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="anime.js"></script>
+    <style>
+        .text-slider-letter {
+            display: inline-block;
+        }
+
+        .text-slider-word {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+        }
+
+        .text-slider-word:nth-child(2) {
+            position: relative;
+        }
+
+        .text-slider-wraper {
+            display: inline-flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="heading h1 hero">
+        Your Guide for
+
+        <span class="text-slider">
+            UNIFIED COMPLIANT CLEAN USABLE
+        </span>
+
+        Data
+    </h1>
+
+    <script>
+        const txtNode = document.querySelector('.text-slider'),
+            txt = txtNode.innerText.trim();
+        txtNode.style = '';
+        txtNode.innerHTML = `<span class="text-slider-wraper">
+            ${txt.split(' ').map((cur, i) => `<span class="text-slider-word">${cur.split('').map(cur2 => `<span class="text-slider-letter">${cur2}</span>`).join('')
+            }</span>`).join('')} 
+            </span>`
+
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.text-slider-word',
+                keyframes: [
+                    { translateY: [60, 0], opacity: 1 },
+                    { translateY: [0, 0], opacity: 1 },
+                    { translateY: [0, -60], opacity: 0 }
+                ],
+
+                translateZ: 0,
+                opacity: [0, 1],
+                easing: "easeOutExpo",
+                duration: 4400,
+                delay: function (el, i) {
+                    return i * 3000;
+                },
+
+            })
+
+        const words = document.querySelectorAll('.text-slider-word')
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.text-slider-letter',
+                translateY: [100, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                easing: "easeOutExpo",
+                duration: 2400,
+                delay: function (el, i, l) {
+                    return i * 200;
+                },
+                endDelay: function (el, i, l) {
+                    return (l - i) * 100;
+                }
+            })
+
+
+
+
+    </script>
+</body>
+
+</html>

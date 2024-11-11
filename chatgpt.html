@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Gradient Animation</title>
+  <style>
+    /* Animation for the gradient */
+    @keyframes moveAndGrow {
+      0% {
+        x1: 0%;
+        x2: 0%;
+      }
+      50% {
+        x1: 0%;
+        x2: 100%;
+      }
+      100% {
+        x1: 100%;
+        x2: 100%;
+      }
+    }
+
+    /* Animation for the rect applying the gradient */
+    rect {
+      animation: gradientMove 4s infinite linear;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% {
+        x: 0;
+        width: 100%;
+      }
+      50% {
+        x: 0;
+        width: 100%;
+      }
+    }
+
+    /* Applying the animation to the gradient */
+    linearGradient {
+      animation: moveAndGrow 4s infinite linear;
+    }
+  </style>
+</head>
+<body>
+
+<svg width="400" height="200">
+  <defs>
+    <!-- Define the linear gradient with an id to animate -->
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:yellow;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:green;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Apply the gradient to a rectangle -->
+  <rect width="400" height="200" fill="url(#grad1)" />
+</svg>
+
+</body>
+</html>
