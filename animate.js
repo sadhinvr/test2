@@ -1,53 +1,63 @@
-
-const style = document.createElement('style');
-style.textContent = `
-.text-slider-letter {
+const style = document.createElement("style");
+style.textContent = ` 
+        h1{
+            display: flex;
+        }
+        .text-slider-letter {
             display: inline-block;
         }
 
         .text-slider-word {
             display: inline-block;
-            position: absolute;
-            top: 0;
-        }
 
-        .text-slider-word:nth-child(2) {
-            position: relative;
         }
 
         .text-slider-wraper {
-            display: inline-flex;
-            flex-direction: column;
-            position: relative;
+            display: inline-block;
             overflow: hidden;
         }
-`
-document.head.appendChild(style)
 
-const txtNode = document.querySelector('.text-slider'),
-            txt = txtNode.innerText.trim();
-        txtNode.style = '';
-        txtNode.innerHTML = `<span class="text-slider-wraper">
-            ${txt.split(' ').map((cur, i) => `<span class="text-slider-word">${cur.split('').map(cur2 => `<span class="text-slider-letter">${cur2}</span>`).join('')
-            }</span>`).join('')} 
-            </span>`
+        .text-slider-swap {
+            display: inline-flex;
+            flex-direction: column;
+        }
+`;
+document.head.appendChild(style);
 
+const txtNode = document.querySelector(".text-slider"),
+    txt = txtNode.innerText.trim();
+txtNode.style = "";
+txtNode.innerHTML = `<span class="text-slider-wraper">
+            <span class="text-slider-swap">
+                ${txt
+                    .split(" ")
+                    .map(
+                        (cur, i) =>
+                            `<span class="text-slider-word w${i}">${cur
+                                .split("")
+                                .map(
+                                    (cur2) =>
+                                        `<span class="text-slider-letter">${cur2}</span>`
+                                )
+                                .join("")}</span>`
+                    )
+                    .join("")} 
+            </span>
+            </span>`;
 
-anime.timeline({ loop: true })
-            .add({
-                targets: '.text-slider-word',
-                keyframes: [
-                    { translateY: [60, 0], opacity: 1 },
-                    { translateY: [0, 0], opacity: 1 },
-                    { translateY: [0, -60], opacity: 0 }
-                ],
+const words = document.querySelectorAll(".text-slider-word");
+let h = words[0].getBoundingClientRect().height;
+document.querySelector(".text-slider-wraper").style.height = h + "px";
+words.forEach((e) => (e.style.height = h + "px"));
 
-                translateZ: 0,
-                opacity: [0, 1],
-                easing: "easeOutExpo",
-                duration: 4400,
-                delay: function (el, i) {
-                    return i * 3000;
-                },
-
-})
+anime.timeline({ loop: true }).add({
+    targets: ".text-slider-swap",
+    keyframes: [
+        { translateY: [h, 0] },
+        { translateY: [0, -h] },
+        { translateY: [-h, -2 * h] },
+        { translateY: [-2 * h, -3 * h] },
+    ],
+    easing: "easeOutExpo",
+    duration: 8000,
+});

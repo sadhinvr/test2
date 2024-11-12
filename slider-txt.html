@@ -6,15 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="anime.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> -->
     <style>
+        h1{
+            font-size: 45px;
+            display: flex;
+
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
         .text-slider-letter {
             display: inline-block;
         }
 
         .text-slider-word {
             display: inline-block;
-            position: absolute;
+            /* position: absolute;
             top: 0;
+            transform: translateY(60px); */
+
         }
 
         .text-slider-word:nth-child(2) {
@@ -22,10 +34,15 @@
         }
 
         .text-slider-wraper {
+            display: inline-block;
+            /* position: relative; */
+            overflow: hidden;
+
+        }
+
+        .text-slider-swap {
             display: inline-flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
         }
     </style>
 </head>
@@ -46,48 +63,151 @@
             txt = txtNode.innerText.trim();
         txtNode.style = '';
         txtNode.innerHTML = `<span class="text-slider-wraper">
-            ${txt.split(' ').map((cur, i) => `<span class="text-slider-word">${cur.split('').map(cur2 => `<span class="text-slider-letter">${cur2}</span>`).join('')
+            <span class="text-slider-swap">
+                ${txt.split(' ').map((cur, i) => `<span class="text-slider-word w${i}">${cur.split('').map(cur2 => `<span class="text-slider-letter">${cur2}</span>`).join('')
             }</span>`).join('')} 
+            </span>
             </span>`
 
 
-        anime.timeline({ loop: true })
-            .add({
-                targets: '.text-slider-word',
-                keyframes: [
-                    { translateY: [60, 0], opacity: 1 },
-                    { translateY: [0, 0], opacity: 1 },
-                    { translateY: [0, -60], opacity: 0 }
-                ],
+        // anime.timeline({ loop: true })
+        //     .add({
+        //         targets: '.text-slider-word',
+        //         keyframes: [
+        //             { translateY: [60, 0], },
+        //             { translateY: [0, 0], },
+        //             { translateY: [0, -60], },
+        //         ],
 
-                translateZ: 0,
-                opacity: [0, 1],
-                easing: "easeOutExpo",
-                duration: 4400,
-                delay: function (el, i) {
-                    return i * 3000;
-                },
+        //         translateZ: 0,
+        //         // opacity: [0, 1],
+        //         easing: "easeOutExpo",
+        //         duration: 4400,
+        //         delay: function (el, i) {
 
-            })
+        //             console.log(i)
+        //             return [0,3000,6000,9000,12000][i];
+        //         },
+
+        //         endDelay: 0
+
+        //     })
 
         const words = document.querySelectorAll('.text-slider-word')
+        let h = words[0].getBoundingClientRect().height;
+        document.querySelector('.text-slider-wraper').style.height = h + 'px';
+        words.forEach(e => e.style.height = h + 'px')
 
-        anime.timeline({ loop: true })
+        anime.timeline({loop:true})
             .add({
-                targets: '.text-slider-letter',
-                translateY: [100, 0],
-                translateZ: 0,
-                opacity: [0, 1],
+                targets: ".text-slider-swap",
+                keyframes: [
+                    { translateY: [h,0] },
+                    { translateY: [0,-h] },
+                    { translateY: [-h,-2*h] },
+                    { translateY: [-2*h,-3*h] },
+                ]
+                , 
                 easing: "easeOutExpo",
-                duration: 2400,
-                delay: function (el, i, l) {
-                    return i * 200;
-                },
-                endDelay: function (el, i, l) {
-                    return (l - i) * 100;
-                }
+                duration: 8000,
             })
 
+
+            
+        //console.log(words[0].getBoundingClientRect().height)
+
+        //WITH Timelines (cleaner, more versatile)
+        // var tl = gsap.timeline({ repeat: 20, repeatDelay: -2 });
+
+        // tl.to("#id", { y: 50, duration: 1 });
+        // tl.to("#id", { opacity: 0, duration: 1 });
+
+
+
+
+      
+
+        // anime.timeline({ loop: true })
+        //     .add({
+        //         targets: words[0],
+        //         keyframes: [
+        //             { translateY: [60, 0], },
+        //             { translateY: [0, 0], },
+        //             { translateY: [0, -60], },
+        //         ],
+
+        //         translateZ: 0,
+        //         // opacity: [0, 1],
+        //         easing: "easeOutExpo",
+        //         duration: 4000,
+        //         delay: 0
+
+
+        //     })
+        //     .add({
+        //         targets: words[1],
+        //         keyframes: [
+        //             { translateY: [60, 0], },
+        //             { translateY: [0, 0], },
+        //             { translateY: [0, -60], },
+        //         ],
+
+        //         translateZ: 0,
+        //         // opacity: [0, 1],
+        //         easing: "easeOutExpo",
+        //         duration: 4000,
+        //         delay: -1000
+
+        //     })
+        //     .add({
+        //         targets: words[2],
+        //         keyframes: [
+        //             { translateY: [60, 0], },
+        //             { translateY: [0, 0], },
+        //             { translateY: [0, -60], },
+        //         ],
+
+        //         translateZ: 0,
+        //         // opacity: [0, 1],
+        //         easing: "easeOutExpo",
+        //         duration: 4000,
+        //         delay: -1000
+
+        //     })
+        //     .add({
+        //         targets: words[3],
+        //         keyframes: [
+        //             { translateY: [60, 0], },
+        //             { translateY: [0, 0], },
+        //             { translateY: [0, -60], },
+        //         ],
+
+        //         translateZ: 0,
+        //         // opacity: [0, 1],
+        //         easing: "easeOutExpo",
+        //         duration: 4000,
+        //         delay: -1000
+
+        //     })
+
+
+
+
+        // anime.timeline({ loop: true })
+        // .add({
+        //     targets: '.text-slider-word.w1 .text-slider-letter',
+        //     translateY: [100, 0],
+        //     translateZ: 0,
+        //     opacity: [0, 1],
+        //     easing: "easeOutExpo",
+        //     duration: 2400,
+        //     delay: function (el, i, l) {
+        //         return i * 200;
+        //     },
+        //     endDelay: function (el, i, l) {
+        //         return (l - i) * 100;
+        //     }
+        // })
 
 
 
