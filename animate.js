@@ -2,6 +2,7 @@ const style = document.createElement("style");
 style.textContent = ` 
         h1{
             display: flex;
+            
         }
         .text-slider-letter {
             display: inline-block;
@@ -47,7 +48,8 @@ txtNode.innerHTML = `<span class="text-slider-wraper">
 
 const words = document.querySelectorAll(".text-slider-word");
 let h = words[0].getBoundingClientRect().height;
-document.querySelector(".text-slider-wraper").style.height = h + "px";
+
+document.querySelector(".text-slider-wraper").style.height = h*.815 + "px";
 words.forEach((e) => (e.style.height = h + "px"));
 
 anime.timeline({ loop: true }).add({

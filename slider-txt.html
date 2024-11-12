@@ -10,8 +10,8 @@
     <style>
         h1{
             font-size: 45px;
-            display: flex;
-
+            /* display: flex; */
+            max-width: 670px;
         }
         *{
             margin: 0;
@@ -95,7 +95,7 @@
 
         const words = document.querySelectorAll('.text-slider-word')
         let h = words[0].getBoundingClientRect().height;
-        document.querySelector('.text-slider-wraper').style.height = h + 'px';
+        document.querySelector('.text-slider-wraper').style.height = h*.815 + 'px';
         words.forEach(e => e.style.height = h + 'px')
 
         anime.timeline({loop:true})
@@ -113,7 +113,7 @@
             })
 
 
-            
+
         //console.log(words[0].getBoundingClientRect().height)
 
         //WITH Timelines (cleaner, more versatile)
