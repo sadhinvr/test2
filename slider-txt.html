@@ -44,6 +44,11 @@
             display: inline-flex;
             flex-direction: column;
         }
+
+        .text-slider{
+            display: inline-flex;
+            
+        }
     </style>
 </head>
 
@@ -68,6 +73,7 @@
             }</span>`).join('')} 
             </span>
             </span>`
+
 
 
         // anime.timeline({ loop: true })
@@ -95,7 +101,7 @@
 
         const words = document.querySelectorAll('.text-slider-word')
         let h = words[0].getBoundingClientRect().height;
-        document.querySelector('.text-slider-wraper').style.height = h*.815 + 'px';
+        document.querySelector('.text-slider-wraper').style.height = h + 'px';
         words.forEach(e => e.style.height = h + 'px')
 
         anime.timeline({loop:true})
