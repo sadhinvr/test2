@@ -182,7 +182,7 @@
         
 
         function fun(e) {
-            const val = e.currentTarget.value * 1;
+            const val = e.currentTarget.value * 1 || inp.value * 1;
             if (val !== NaN && val < 50000 && val > -50000) {
                 if (Math.sign(val) === -1) {
                     clockText.innerText = 'clockwise';
