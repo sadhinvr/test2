@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
+    <title>Document</title>
+    <style>
+        body {
+            /* background: #000; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 98vh;
+            font-family: 'Open Sans';
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .circle {
+            width: 70vw;
+            height: 70vw;
+            max-width: 300px;
+            max-height: 300px;
+            /* background: #000; */
+            border-radius: 50%;
+            border: 2px solid #a1a1a1;
+            position: relative;
+
+
+        }
+
+        .grid {
+            position: absolute;
+            background: #d6d6d6;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            left: 50%;
+
+        }
+
+        .grid.g2 {
+            top: 50%;
+            bottom: auto;
+            right: 0;
+            left: 0;
+            width: auto;
+            height: 2px;
+        }
+
+        .line {
+            /* border:2px solid #ff5b5b; */
+            width: 100%;
+            height: 5px;
+            position: absolute;
+            top: calc(50% - 2.5px);
+            /* left: 50%; */
+            transition: 1s;
+            transform: rotateZ(0deg);
+
+        }
+
+        .line .red {
+            position: inherit;
+            background: #ff5454;
+            top: 0px;
+            bottom: 0px;
+            left: 50%;
+            right: 0px;
+            border-radius: 4px;
+        }
+
+        .deg {
+            position: absolute;
+            left: calc(100% + 5px);
+            top: -8px;
+            transform: rotateZ(0deg);
+        }
+
+        .props svg{
+            width: 40px ;
+            height: 40px;
+
+        }
+
+        .props .clock{
+            position: relative;
+        }
+
+        .cl{
+            top: 0;
+            left: 0;
+            position: absolute;
+            opacity: 0;
+        }
+
+        input{
+            min-width: 100px;
+            height: 30px;
+            font-size: 16px;
+
+        }
+
+        .props{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clock{
+            min-width: 140px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circle">
+        <div class="grid"></div>
+        <div class="grid g2"></div>
+        <div class="line">
+            <div class="red"></div>
+            <div class="deg">0deg</div>
+        </div>
+    </div>
+
+
+    <div class="props">
+        <input type="number" value="0">
+        <div class="clock">
+            <svg class="anti" xmlns="http://www.w3.org/2000/svg" version="1.1"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 24 24"
+                style="enable-background:new 0 0 512 512" xml:space="preserve" >
+                <g>
+                    <path
+                        d="M12 2a9.95 9.95 0 0 0-7 2.88V3a1 1 0 0 0-2 0v5a1 1 0 0 0 1 1h5a1 1 0 0 0 0-2H5.776a7.987 7.987 0 1 1 .261 10.334 1 1 0 1 0-1.49 1.334A10 10 0 1 0 12 2z"
+                        fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                </g>
+            </svg>
+
+            <svg class="cl" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512"
+                xml:space="preserve" >
+                <g>
+                    <path
+                        d="M20 2a1 1 0 0 0-1 1v1.88a9.99 9.99 0 1 0 .453 13.787 1 1 0 0 0-1.49-1.334A8.012 8.012 0 1 1 18.225 7H15a1 1 0 0 0 0 2h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"
+                        fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                </g>
+            </svg>
+
+            <div class="clockText">
+                anti-clockwise 
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const inp = document.querySelector('input'),
+         line = document.querySelector('.line '),
+         deg = document.querySelector('.deg '),
+         anti = document.querySelector('.anti '),
+         cl = document.querySelector('.cl '),
+         clockText = document.querySelector('.clockText ');
+
+         inp.addEventListener('input',fun)
+
+         function fun(e){
+            const val = inp.value *1;
+            if(val !== NaN && val < 50000 && val > -50000 ){
+                if(Math.sign(val) === -1){
+                    clockText.innerText = 'clockwise';
+                    cl.style.opacity = '1';
+                    anti.style.opacity = '0';
+
+
+                }else{
+                    clockText.innerText = 'anti-clockwise';
+                    cl.style.opacity = '0';
+                    anti.style.opacity = '1';
+                }
+
+                line.style.transform = `rotateZ(${val * -1}deg)`
+                deg.style.transform = `rotateZ(${val}deg)`
+
+                deg.innerText = `${val}deg`
+            }
+         }
+
+
+    </script>
+</body>
+
+</html>
