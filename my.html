@@ -112,6 +112,7 @@
 
         .clock {
             min-width: 140px;
+            color: green;
         }
 
         .range {
@@ -145,7 +146,7 @@
                 <g>
                     <path
                         d="M12 2a9.95 9.95 0 0 0-7 2.88V3a1 1 0 0 0-2 0v5a1 1 0 0 0 1 1h5a1 1 0 0 0 0-2H5.776a7.987 7.987 0 1 1 .261 10.334 1 1 0 1 0-1.49 1.334A10 10 0 1 0 12 2z"
-                        fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                        fill="currentColor" opacity="1" data-original="currentColor" class=""></path>
                 </g>
             </svg>
 
@@ -154,7 +155,7 @@
                 <g>
                     <path
                         d="M20 2a1 1 0 0 0-1 1v1.88a9.99 9.99 0 1 0 .453 13.787 1 1 0 0 0-1.49-1.334A8.012 8.012 0 1 1 18.225 7H15a1 1 0 0 0 0 2h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"
-                        fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                        fill="currentColor" opacity="1" data-original="currentColor" class=""></path>
                 </g>
             </svg>
 
@@ -175,7 +176,9 @@
             cl = document.querySelector('.cl '),
             clockText = document.querySelector('.clockText '),
             range = document.querySelector('.range '),
-            btn = document.querySelector('.btn ');
+            btn = document.querySelector('.btn '),
+            clock = document.querySelector('.clock ')
+            ;
 
         btn.addEventListener('click', fun);
         range.addEventListener('input',fun);
@@ -188,12 +191,13 @@
                     clockText.innerText = 'clockwise';
                     cl.style.opacity = '1';
                     anti.style.opacity = '0';
-
+                    clock.style.color = 'red';
 
                 } else {
                     clockText.innerText = 'anti-clockwise';
                     cl.style.opacity = '0';
                     anti.style.opacity = '1';
+                    clock.style.color = 'green';
                 }
 
                 line.style.transform = `rotateZ(${val * -1}deg)`
