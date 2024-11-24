@@ -57,7 +57,7 @@
             position: absolute;
             top: calc(50% - 2.5px);
             /* left: 50%; */
-            transition: 1s;
+            transition: .4s linear;
             transform: rotateZ(0deg);
 
         }
@@ -77,41 +77,48 @@
             left: calc(100% + 5px);
             top: -8px;
             transform: rotateZ(0deg);
+            transition: .4s linear;
         }
 
-        .props svg{
-            width: 40px ;
+        .props svg {
+            width: 40px;
             height: 40px;
 
         }
 
-        .props .clock{
+        .props .clock {
             position: relative;
         }
 
-        .cl{
+        .cl {
             top: 0;
             left: 0;
             position: absolute;
             opacity: 0;
         }
 
-        input{
+        .input {
             min-width: 100px;
             height: 30px;
             font-size: 16px;
 
         }
 
-        .props{
+        .props {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .clock{
+        .clock {
             min-width: 140px;
         }
+
+        .range {
+            width: 90vw;
+        }
+
+     
     </style>
 </head>
 
@@ -127,11 +134,14 @@
 
 
     <div class="props">
-        <input type="number" value="0">
+        <div class="" style="display: flex;flex-direction: column;gap: 5px;">
+            <input class="input" type="number" value="0">
+            <button class="btn" style="background: dodgerblue;border: none; padding: 10px 20px;color: white; border-radius: 4px;">rotate</button>
+        </div>
         <div class="clock">
             <svg class="anti" xmlns="http://www.w3.org/2000/svg" version="1.1"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 24 24"
-                style="enable-background:new 0 0 512 512" xml:space="preserve" >
+                style="enable-background:new 0 0 512 512" xml:space="preserve">
                 <g>
                     <path
                         d="M12 2a9.95 9.95 0 0 0-7 2.88V3a1 1 0 0 0-2 0v5a1 1 0 0 0 1 1h5a1 1 0 0 0 0-2H5.776a7.987 7.987 0 1 1 .261 10.334 1 1 0 1 0-1.49 1.334A10 10 0 1 0 12 2z"
@@ -139,8 +149,8 @@
                 </g>
             </svg>
 
-            <svg class="cl" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"  x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512"
-                xml:space="preserve" >
+            <svg class="cl" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve">
                 <g>
                     <path
                         d="M20 2a1 1 0 0 0-1 1v1.88a9.99 9.99 0 1 0 .453 13.787 1 1 0 0 0-1.49-1.334A8.012 8.012 0 1 1 18.225 7H15a1 1 0 0 0 0 2h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"
@@ -149,32 +159,38 @@
             </svg>
 
             <div class="clockText">
-                anti-clockwise 
+                anti-clockwise
             </div>
         </div>
     </div>
 
+    <input type="range" class="range" min="-360" max="360" value="0" step="1" />
+
 
     <script>
-        const inp = document.querySelector('input'),
-         line = document.querySelector('.line '),
-         deg = document.querySelector('.deg '),
-         anti = document.querySelector('.anti '),
-         cl = document.querySelector('.cl '),
-         clockText = document.querySelector('.clockText ');
+        const inp = document.querySelector('.input'),
+            line = document.querySelector('.line '),
+            deg = document.querySelector('.deg '),
+            anti = document.querySelector('.anti '),
+            cl = document.querySelector('.cl '),
+            clockText = document.querySelector('.clockText '),
+            range = document.querySelector('.range '),
+            btn = document.querySelector('.btn ');
 
-         inp.addEventListener('input',fun)
+        btn.addEventListener('click', fun);
+        range.addEventListener('input',fun);
+        
 
-         function fun(e){
-            const val = inp.value *1;
-            if(val !== NaN && val < 50000 && val > -50000 ){
-                if(Math.sign(val) === -1){
+        function fun(e) {
+            const val = e.currentTarget.value * 1;
+            if (val !== NaN && val < 50000 && val > -50000) {
+                if (Math.sign(val) === -1) {
                     clockText.innerText = 'clockwise';
                     cl.style.opacity = '1';
                     anti.style.opacity = '0';
 
 
-                }else{
+                } else {
                     clockText.innerText = 'anti-clockwise';
                     cl.style.opacity = '0';
                     anti.style.opacity = '1';
@@ -183,9 +199,13 @@
                 line.style.transform = `rotateZ(${val * -1}deg)`
                 deg.style.transform = `rotateZ(${val}deg)`
 
-                deg.innerText = `${val}deg`
+                deg.innerText = `${val}deg`;
+
+                range.value = val;
+                inp.value = val;
+
             }
-         }
+        }
 
 
     </script>
